@@ -1,19 +1,19 @@
 
 
 
-class GestorMenuUsuario(): ConsoleSystem(), IMenu {
+class GestorMenuUsuario(val consola: Consola): IMenu {
 
     fun selectorMenuUsuario(){
         var opcion: Int
 
         do{
             mostrarMenu()
-            opcion = lector("Please, insert a number: ")
+            opcion = consola.lector("Please, insert a number: ")
 
             when(opcion){
                 1 -> generarSerie()
                 2 -> TODO()
-                else -> { escritor("Esa opción no es válida. Saliendo del programa.")}
+                else -> { consola.escritor("Esa opción no es válida. Saliendo del programa.")}
 
             }
 
@@ -21,15 +21,15 @@ class GestorMenuUsuario(): ConsoleSystem(), IMenu {
     }
 
     override fun mostrarMenu() {
-        escritor("Menu usuario:")
-        escritor("1. Generar serie")
-        escritor("2. Jugar al ahorcado")
-        escritor("3. Salir")
-        escritor("Por favor, seleccione una opción: ")
+        consola.escritor("Menu usuario:")
+        consola.escritor("1. Generar serie")
+        consola.escritor("2. Jugar al ahorcado")
+        consola.escritor("3. Salir")
+        consola.escritor("Por favor, seleccione una opción: ")
     }
 
     override fun generarSerie() {
-        val generarSerie = GenerarSerie()
+        val generarSerie = GenerarSerie(consola)
         generarSerie.generarSerie()
     }
 

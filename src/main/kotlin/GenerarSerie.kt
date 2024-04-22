@@ -1,37 +1,67 @@
+import kotlin.math.abs
 
 
-class GenerarSerie: ConsoleSystem(){
+class GenerarSerie(private val consola: Consola){
+
+    private val MIN = 1
+    private val MAX = 100
+    private val RANGO_MIN = 30
+
 
     fun generarSerie() {
-        val num1 = generarNum()
-        val num2 = num1 + 30
+        val listaOrdenada = generarRango().sorted()
+        val numPedido = consola.lector("Inserte un número [${listaOrdenada[1]} - ${listaOrdenada[0]}] ->")
 
-        escritor("Se está generando un rango aleatorio...")
-        escritor(". . .")
+        when(masCercano(numPedido, listaOrdenada[0], listaOrdenada[1])){
 
-        val numPedido = lector("Inserte un número [$num1 - $num2] ->")
-        when(numPedido){
-            in 1..50 -> serieDecreciente(num2, num1)
+            listaOrdenada[0] -> {   consola.escritor("Inserte un número [${listaOrdenada[1]} - ${listaOrdenada[0]}] -> $numPedido")
+                                    serieDecreciente(listaOrdenada[0], listaOrdenada[1])}
 
-            in 51..100 -> serieCreciente(num1, num2)
+            listaOrdenada[1] -> {   consola.escritor("Inserte un número [${listaOrdenada[1]} - ${listaOrdenada[0]}] -> $numPedido")
+                                    serieCreciente(listaOrdenada[1], listaOrdenada[0])}
 
-            else -> {escritor("Ese número no es válido. Pruebe de nuevo: ${generarSerie()}")}
+            else -> {consola.escritor("Ese número no es válido. Pruebe de nuevo: ${generarSerie()}")}
         }
     }
 
-    private fun generarNum() = (1..70).random()
+    private fun generarNum() = (MIN..MAX).random()
 
 
+    private fun generarRango(): List<Int>{
+        val num1: Int = generarNum()
+        var num2: Int = generarNum()
+
+        consola.escritor("Se está generando un rango aleatorio...")
+        consola.escritor(". . .")
+
+        while(abs(num1 - num2) < RANGO_MIN){
+            num2 = generarNum()
+
+        }
+        return listOf(num1, num2)
+    }
 
     private fun serieCreciente(num1: Int, num2: Int){
-        val rangoNums: IntRange = (num1..num2)
-        escritor("${rangoNums.forEach { escritor("${it + it + 1}") }}")
+        var suma = 0
+        var serie = (num1..num2).toString()
+        var listaVaciaSerie = mutableListOf<String>()
+
+        serie.forEach{
+            listaVaciaSerie.add("$it +")
+            suma += 1
+        }
 
     }
 
     private fun serieDecreciente(num1: Int, num2: Int){
-        val rangoNums: IntRange = (num2..num1)
-        escritor("${rangoNums.forEach { escritor("${it + it + 1}") }}")
+        TODO()
     }
 
+
+    fun masCercano(numero: Int, a: Int, b: Int): Int {
+        val distanciaHastaA = Math.abs(numero - a)
+        val distanciaHastaB = Math.abs(numero - b)
+
+        return if (distanciaHastaA < distanciaHastaB) a else b
+    }
 }

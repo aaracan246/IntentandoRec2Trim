@@ -1,5 +1,7 @@
 fun main() {
-    val menuUsuario = GestorMenuUsuario()
+    val consola = Consola()
+
+    val menuUsuario = GestorMenuUsuario(consola)
 
     menuUsuario.selectorMenuUsuario()
 

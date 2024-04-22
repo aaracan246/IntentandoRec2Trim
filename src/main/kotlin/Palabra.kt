@@ -13,14 +13,14 @@ class Palabra {
             val json = File(ruta).readText()
             return Gson().fromJson(json, Palabras::class.java).palabras
         }
-    }
-    data class Palabras(val palabras: List<String>)
 
-    fun obtenerPalabraAleatoria(){
-        if (ES_JSON){
-            leerFicheroJSON(RUTA_JSON)
+        fun obtenerPalabraAleatoria(){
+            if (ES_JSON){
+                leerFicheroJSON(RUTA_JSON)
+            }
+            else leerFicheroTexto(RUTA_TEXTO)
         }
-        else leerFicheroTexto(RUTA_TEXTO)
+        data class Palabras(val palabras: List<String>)
     }
 }
 

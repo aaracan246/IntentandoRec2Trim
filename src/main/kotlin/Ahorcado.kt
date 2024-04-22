@@ -1,11 +1,11 @@
-class Ahorcado(val intentosMax: Int = 5, palabra: Palabra) {
+class Ahorcado(val consola: Consola, val intentosMax: Int = 5) {
 
 
-    private val palabraOculta = palabra.obtenerPalabraAleatoria()
+    private val palabraOculta = Palabra.obtenerPalabraAleatoria()
 
 
     fun jugar(){
-        println(palabraOculta)
+
     }
 }
 
